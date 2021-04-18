@@ -66,7 +66,7 @@
             <div class="input-field col s3">
                 <select class="week">
                     <option value=""disabled>Choose Your Option</option>
-                    <option value="Full" selected>All Week</option>
+                    <option value="Full" selected>All Weeks</option>
                     <?php
                     // Get the week
                     echo ( isset( $_GET['week'] ) ) ? "<option selected value='".$_GET['week']."'>Week ".$_GET['week']."</option>" : "";
