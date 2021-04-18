@@ -3,6 +3,11 @@ $(document).ready(function()
     // Materialize
     $('select').formSelect();
 
+    $("[name=reset]").click(function()
+    {
+        location.href = `index.php`;
+    });
+
     $("[name=load-events]").click(function()
     {
         let month = $('.months').val(),
@@ -13,13 +18,14 @@ $(document).ready(function()
             {
                 alert('Please, Select a month');
             }
-    else if( year == null ) {
+    else if( year == null ) 
+            {
                 alert('Please, Select a year');
             }
        else {
-            // Adding 0 before single / one digit (0-9)
-            (month.length < 2) ? month = '0' + month : month = month;
-            location.href = `index.php?month=${month}&year=${year}&week=${week}`;
+                // Adding 0 before single / one digit (0-9)
+                (month.length < 2) ? month = '0' + month : month = month;
+                location.href = `index.php?month=${month}&year=${year}&week=${week}`;
             }
     });
 
@@ -35,7 +41,8 @@ $(document).ready(function()
                     $('table tr').eq(selectedWeek).fadeIn(500);
                 });
             }
-            else {
+            else 
+            {
                 false;
             }
 });

@@ -12,6 +12,7 @@ caption {
 table.highlight tr:hover {
     background: #26a69a !important;
     color: white !important;
+    border: solid 1px white !important;
 }
 
 table.highlight tr th {
@@ -39,5 +40,4 @@ table.highlight tr td {
     text-align: center;
     border: solid 2px white;
     box-shadow: 0 11px 14px -11px black;
-
 }

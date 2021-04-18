@@ -1,6 +1,11 @@
 <?php
     function build_calendar( $month, $year ) 
     {
+        if ( !$month || !$year ) {
+            $month = date('m');
+            $year = date('Y');
+        }
+
         // Create array containing the names of days of week
             $days_in_week = array( 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN' );
 
@@ -25,7 +30,7 @@
             $calendar .= "<tr>";
 
         // Calendar headers
-            foreach($days_in_week as $day):
+            foreach( $days_in_week as $day ):
                 $calendar .= "<th class='header'>$day</th>";
             endforeach;
 
@@ -34,7 +39,7 @@
 
         // There's an error , if the first day of month is the last day of week then
         // the calendar will be generated like this
-        /***** Solution *****/
+            /***** Solution *****/
             if( $first_day_of_week == -1 ):
                 $first_day_of_week = 6;
             endif;
@@ -58,7 +63,6 @@
 
                     $calendar .= "<td class='day' rel='$date'>" . $showcurrentDay . "</td>";
                 
-
                 $currentday++;
                 $first_day_of_week++;
 
