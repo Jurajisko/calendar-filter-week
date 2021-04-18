@@ -1,10 +1,6 @@
 <?php
     function build_calendar( $month, $year ) 
     {
-        if ( !$month || !$year ) {
-            $month = date('m');
-            $year = date('Y');
-        }
 
         // Create array containing the names of days of week
             $days_in_week = array( 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN' );
