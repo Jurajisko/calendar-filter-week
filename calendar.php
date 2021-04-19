@@ -1,7 +1,6 @@
 <?php
     function build_calendar( $month, $year ) 
     {
-
         // Create array containing the names of days of week
             $days_in_week = array( 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT', 'SUN' );
 
@@ -19,50 +18,61 @@
 
         // Get the position / index value of the first day of selected month
             $first_day_of_week = intval( $first_day_info['wday'] ) - 1;
+// Today
+$today = date('Y-m-j', time());
 
-        // Create the table and add the name of days as headers
-            $calendar  = "<table class='calendar responsive-table centered highlight col s12'>";
-            $calendar .= "<caption>$name_of_month $year</caption>";
-            $calendar .= "<tr>";
+// Create the table and add the name of days as headers
+     $calendar = "<table class='calendar responsive-table centered highlight col s12'>";
+    $calendar .= "<caption>$name_of_month $year</caption>";
+    $calendar .= "<tr>";
 
-        // Calendar headers
-            foreach( $days_in_week as $day ):
-                $calendar .= "<th class='header'>$day</th>";
-            endforeach;
+// Calendar headers
+    foreach( $days_in_week as $day ):
+        $calendar .= "<th class='header'>$day</th>";
+    endforeach;
 
-        // Close the row and create the rest of the Calendar
-            $calendar .= "</tr>";
+// Close the row and create the rest of the Calendar
+    $calendar .= "</tr>";
 
-        // There's an error , if the first day of month is the last day of week then
-        // the calendar will be generated like this
-            /***** Solution *****/
-            if( $first_day_of_week == -1 ):
-                $first_day_of_week = 6;
-            endif;
+// There's an error , if the first day of month is the last day of week then
+// the calendar will be generated like this
+    /***** Solution *****/
+    if( $first_day_of_week == -1 ):
+        $first_day_of_week = 6;
+    endif;
 
-        // Placing the first day of selected month in the right place using the empty / white spaces (colspan)
-            if( $first_day_of_week > 0 ) : $calendar .= "<td colspan='$first_day_of_week'></td>"; endif;
+// Placing the first day of selected month in the right place using the empty / white spaces (colspan)
+    if( $first_day_of_week > 0 ) : $calendar .= "<td colspan='$first_day_of_week'></td>"; endif;
 
-        // Initiate day counter
-            $currentday = 1;
+// Initiate day counter
+    $currentday = 1;
 
-            while( $currentday <= $total_days ):
+    while( $currentday <= $total_days ):
 
-            // If seventh columne reached then start a new row
-                if( $first_day_of_week == 7 ) : $first_day_of_week = 0; 
-                    $calendar .= "</tr><tr>"; 
-                endif;
+    // If seventh columne reached then start a new row
+        if( $first_day_of_week == 7 ) : $first_day_of_week = 0; 
+            $calendar .= "</tr><tr>"; 
+        endif;
 
-            // This is optional (Adding 0 before single / one digit (0-9))
-                $showcurrentDay = ( strlen($currentday) < 2 ) ? "0" . $currentday : $currentday;
-                $date = "$year-$month-$showcurrentDay";
+    // This is optional (Adding 0 before single / one digit (0-9))
+        $showcurrentDay = ( strlen($currentday) < 2 ) ? "0" . $currentday : $currentday;
+        $date = "$year-$month-$showcurrentDay";
 
-                    $calendar .= "<td class='day' rel='$date'>" . $showcurrentDay . "</td>";
-                
-                $currentday++;
-                $first_day_of_week++;
+        if ( $today == $date ) {
+            $calendar .= '<td class="day today" rel=' . $date . '>
+                            <a class="event" href="#">
+                                <div>' . $showcurrentDay . '</div>
+                                <div></div></a></td>';
+        } else if ( $today > $date ) {
+            $calendar .= '<td class="day last" rel='.$date.'>' . $showcurrentDay . '</td>';
+        } else {
+            $calendar .= '<td class="day" rel='.$date.'>' . $showcurrentDay . '</td>';
+        }
+            
+        $currentday++;
+        $first_day_of_week++;
 
-            endwhile;
+    endwhile;
 
         // Complete the row of the oast week in month
             if( $first_day_of_week != 7 ):

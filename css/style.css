@@ -41,3 +41,11 @@ table.highlight tr td {
     border: solid 2px white;
     box-shadow: 0 11px 14px -11px black;
 }
+
+.today {
+    background-color: orangered;
+}
+
+.last {
+    background-color: lightgray;
+}

@@ -5,7 +5,7 @@ $(document).ready(function()
 
     $("[name=reset]").click(function()
     {
-        location.href = `index.php`;
+        window.location.href = window.location.href.split('?')[0];
     });
 
     $("[name=load-events]").click(function()
@@ -25,7 +25,7 @@ $(document).ready(function()
        else {
                 // Adding 0 before single / one digit (0-9)
                 (month.length < 2) ? month = '0' + month : month = month;
-                location.href = `index.php?month=${month}&year=${year}&week=${week}`;
+                location.href = `?month=${month}&year=${year}&week=${week}`;
             }
     });
 
