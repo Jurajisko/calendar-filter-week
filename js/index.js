@@ -45,4 +45,4 @@ $(document).ready(function()
             {
                 false;
             }
-});
+})(materialize);
