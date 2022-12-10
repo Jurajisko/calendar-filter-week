@@ -1,0 +1,26 @@
+***
+https://api.jqueryui.com/datepicker/
+***
+http://jsfiddle.net/fENnm/
+***
+$( "#datepicker1" ).datepicker({
+  showWeek: true,
+  dayNamesMin: [ "Ne", "Po", "Ut", "St", "Št", "Pi", "So" ],
+  weekHeader: "Tý",
+  numberOfMonths: 2,
+  dateFormat: "m/d/yy",
+  /*altField: "#altFormat",
+  changeMonth: true,
+  changeYear: true,
+  altFormat: "yy-mm-dd",*/
+  //minDate: 0,
+  beforeShowDay: function(date) {
+    var day = date.getDay();
+    return [(day == 0 || day == 6)]
+  }
+});
+$(document).on('click','.ui-datepicker-next',function(){
+    var picker = $("#datepicker1").data("datepicker");
+    var date = new Date(picker.selectedYear, picker.selectedMonth, 1);
+    console.log(date);
+});
