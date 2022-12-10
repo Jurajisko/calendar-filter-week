@@ -1,19 +1,21 @@
 <!DOCTYPE html>
 <html lang="it" dir="ltr">
+
 <head>
     <meta charset="utf-8">
     <title>PHP Calendar</title>
 
     <link rel="stylesheet" href="css/style.css">
-    
+
     <!--Import Google Icon Font-->
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-    
+
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
 
-    
+
 </head>
+
 <body>
     <div class="container">
         <div class="row">
@@ -22,10 +24,10 @@
                     <option value="" disabled selected>Choose Your Option</option>
                     <?php
                     // Get the name of month
-                        $firstDayOfMonth = mktime( 0, 0, 0, $_GET['month'], 1, $_GET['year'] );
-                         $first_day_info = getdate( $firstDayOfMonth );
-                          $name_of_month = $first_day_info['month'];
-                    echo ( isset($_GET['month']) ) ? "<option selected value='".$_GET['month']."'>".$name_of_month."</option>" : ".date('m').";
+                    $firstDayOfMonth = mktime(0, 0, 0, $_GET['month'], 1, $_GET['year']);
+                    $first_day_info = getdate($firstDayOfMonth);
+                    $name_of_month = $first_day_info['month'];
+                    echo (isset($_GET['month'])) ? "<option selected value='" . $_GET['month'] . "'>" . $name_of_month . "</option>" : ".date('m').";
                     ?>
                     <option value="1">January</option>
                     <option value="2">February</option>
@@ -48,33 +50,43 @@
                     <option value="" disabled selected>Choose Your Option</option>
                     <?php
                     // Get the year
-                    echo ( isset($_GET['year']) ) ? "<option selected value='".$_GET['year']."'>".$_GET['year']."</option>" : "";
+                    echo (isset($_GET['year'])) ? "<option selected value='" . $_GET['year'] . "'>" . $_GET['year'] . "</option>" : "";
                     ?>
-                    <option value="2021">2021</option>
+                    <!-- <option value="2021">2021</option>
                     <option value="2022">2022</option>
                     <option value="2023">2023</option>
                     <option value="2024">2024</option>
                     <option value="2025">2025</option>
                     <option value="2026">2026</option>
-                    <option value="2027">2027</option>
+                    <option value="2027">2027</option> -->
+                    <?php
+                    for ($y = date("Y"); $y <= date("Y") + 5; $y++) {
+                        echo "<option value=" . $y . ">" . $y . "</option>";
+                    }
+                    ?>
                 </select>
                 <label>Choose A Year</label>
             </div>
 
             <div class="input-field col s3">
                 <select class="week">
-                    <option value=""disabled>Choose Your Option</option>
+                    <option value="" disabled>Choose Your Option</option>
                     <option value="Full" selected>All Weeks</option>
                     <?php
                     // Get the week
-                    echo ( isset( $_GET['week'] ) ) ? "<option selected value='".$_GET['week']."'>Week ".$_GET['week']."</option>" : "";
+                    echo (isset($_GET['week'])) ? "<option selected value='" . $_GET['week'] . "'>Week " . $_GET['week'] . "</option>" : "";
                     ?>
-                    <option value="1">Week 1</option>
+                    <!-- <option value="1">Week 1</option>
                     <option value="2">Week 2</option>
                     <option value="3">Week 3</option>
                     <option value="4">Week 4</option>
                     <option value="5">Week 5</option>
-                    <option value="6">Week 6</option>
+                    <option value="6">Week 6</option> -->
+                    <?php
+                    for ($y = 1; $y <= 1 + 5; $y++) {
+                        echo "<option value=" . $y . ">Týždeň " . $y . "</option>";
+                    }
+                    ?>
                 </select>
                 <label>Choose A Week</label>
             </div>
@@ -88,27 +100,57 @@
                 Reset
                 <i class="material-icons right">send</i>
             </button>
-</div>
-                <?php include_once( 'calendar.php' ); ?>
+        </div>
 
-                <?php 
-                    if ( !isset($_GET['month']) || !isset($_GET['year']) ) {
-                        echo build_calendar( date('m'), date('Y') );
-                    } else {
-                        echo build_calendar( $_GET['month'], $_GET['year']);
-                    }
-                ?>
-        
+        <button type='button' class="sel" data-id="check_week">
+            <i class="fa fa-check-square-o fa-lg" title="Select All">Vybrať všetky týždne</i>
+        </button>
+        <button type='button' class="remove" data-id="check_week">
+            <i class="fa fa-square-o fa-lg" title="Unselect All">Zrušiť všetky týždne</i>
+        </button>
+        <div class="weekend" data-id="only_weekend">
+            <label id="only_weekend">
+                <input type='checkbox' name='only_weekend' />Len víkendy
+            </label>
+        </div>
+
+        <?php
+        $open = array(
+            "check_week" => array(
+                "50-2022",
+                "51-2022",
+                "52-2022"
+            ),
+            "only_weekend" => array("1")
+        )
+
+        ?>
+
+        <?php include_once('calendar.php'); ?>
+
+        <?php
+        if (!isset($_GET['month']) || !isset($_GET['year'])) {
+            echo build_calendar(date('m'), date('Y'), $open);
+        } else {
+            echo build_calendar($_GET['month'], $_GET['year'], $open);
+        }
+        ?>
+
     </div>
-    
+
+    <?php
+    // $date = date("W");
+    // echo $date . " Week Number";
+    ?>
+
     <!-- Minified jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-    
+
     <script src="js/index.js"></script>
 
 </body>
-</html>
 
+</html>
