@@ -1,0 +1,78 @@
+***	HTML	***
+<button type='button' class="sel" data-id="CountryListBoxID_prodn">
+  <i class="fa fa-check-square-o fa-lg" title="Select All"></i>
+</button>
+<button type='button' class="remove" data-id="CountryListBoxID_prodn">
+  <i class="fa fa-square-o fa-lg" title="Unselect All"></i>
+</button>
+<hr>
+
+<div id="CountryListBoxID_prodn">
+  <label class="myEuropeCountries">
+    <input type="checkbox" id="UN40" value="Austria" />Austria</label>
+  <label class="myEuropeCountries">
+    <input type="checkbox" id="UN251" value="France" />France</label>
+  <label class="myEuropeCountries">
+    <input type="checkbox" id="UN276" value="Germany" />Germany</label>
+</div>
+
+<br>
+<br>
+<br>
+<button type='button' class="sel" data-id="CountryListBoxID_SECOND">
+  <i class="fa fa-check-square-o fa-lg" title="Select All"></i>
+</button>
+<button type='button' class="remove" data-id="CountryListBoxID_SECOND">
+  <i class="fa fa-square-o fa-lg" title="Unselect All"></i>
+</button>
+<hr>
+<div id="CountryListBoxID_SECOND">
+  <label class="myEuropeCountries">
+    <input type="checkbox" id="G80" value="Spain" />Spain</label>
+  <label class="myEuropeCountries">
+    <input type="checkbox" id="G500" value="Italy" />Italy</label>
+  <label class="myEuropeCountries">
+    <input type="checkbox" id="G300" value="UK" />UK</label>
+</div>
+
+***	JS (jQuery)	***
+var chks = {
+  "CountryListBoxID_prodn": [],
+  "CountryListBoxID_SECOND": []
+}
+
+function saveSet(id, checks) {
+  chks[id] = checks;
+  localStorage.setItem("selected_checkboxes", JSON.stringify(chks));
+  console.log(id,localStorage.getItem("selected_checkboxes"));  
+}
+
+$(function() {
+
+  var chks = localStorage.getItem("selected_checkboxes");
+  if (chks) {
+    chks = JSON.parse(chks);
+    $.each(chks,function(key,val) {
+    console.log(key, val)
+      $.each(val,function(_,id) {
+        $("#"+id).prop("checked",true);
+      });  
+    });
+  }
+
+  $(".sel, .remove").on("click", function() {
+    var sel = $(this).is(".sel"),
+      id = $(this).data("id"),
+      $checks = $("#" + id).find(":checkbox");
+    $checks.prop("checked", sel);
+    saveSet(id, sel ? $checks.map(function() {
+      return this.id
+    }).get() : []); // save all or none
+  });
+  $(":checkbox").on("click", function() {
+    var $container = $(this).closest("div");
+    saveSet($container.attr("id"), $container.find(":checkbox:checked").map(function() {
+      return this.id
+    }).get());
+  });
+});
